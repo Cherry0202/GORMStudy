@@ -15,8 +15,17 @@ func main() {
 		Email string `gorm:"size:255"`
 	}
 
+	//接続
 	db, err := gorm.Open("mysql", "root@/note?charset=utf8&parseTime=True&loc=Local")
 	//db, err := gorm.Open("mysql", "root:password@/dbname?charset=utf8&parseTime=True&loc=Local")
+
+	//table
+	db.Set("gorm:table_options", "ENGINE=InnoDB").AutoMigrate(&User{})
+
+	// マイグレーション
+	db.AutoMigrate(&User{})
+
+
 	if err != nil {
 		panic("failed to connect database")
 	}
